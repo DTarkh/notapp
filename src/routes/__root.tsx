@@ -2,15 +2,16 @@ import {
   HeadContent,
   Scripts,
   createRootRouteWithContext,
+  redirect,
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
-
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
-
-import appCss from '../styles.css?url'
-
 import type { QueryClient } from '@tanstack/react-query'
+import { Header } from '#/components/Header/Header'
+import { Main } from '#/components/Main/Main'
+import { getUser } from '#/lib/server'
+import '#/app/styles/styles.css'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -27,17 +28,21 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'TanStack Start Starter',
-      },
-    ],
-    links: [
-      {
-        rel: 'stylesheet',
-        href: appCss,
+        title: 'NotApp',
       },
     ],
   }),
   shellComponent: RootDocument,
+  beforeLoad: async ({ location }) => {
+    const user = await getUser()
+    if (!user.id) {
+      if (location.pathname !== '/login') {
+        throw redirect({ to: '/login' })
+      }
+      return { user }
+    }
+    return { user }
+  },
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
@@ -47,7 +52,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        {children}
+        <Header />
+        <Main>{children}</Main>
         <TanStackDevtools
           config={{
             position: 'bottom-right',

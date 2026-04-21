@@ -1,0 +1,46 @@
+@import './theme.css';
+@import './utilities.css';
+
+:root {
+  --color-primary: hsl(238, 50%, 90%);
+  --color-secondary: hsl(238, 50%, 10%);
+  --color-tertiary: hsl(298, 80%, 20%);
+  --color-accent: hsl(178, 80%, 20%);
+}
+html.dark {
+  --color-primary: hsl(238, 50%, 10%);
+  --color-secondary: hsl(238, 50%, 90%);
+  --color-tertiary: hsl(298, 80%, 80%);
+  --color-accent: hsl(178, 80%, 80%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    Ubuntu,
+    Cantarell,
+    'Noto Sans',
+    sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--color-secondary);
+  background-color: var(--color-primary);
+  -webkit-font-smoothing: antialiased;
+}
