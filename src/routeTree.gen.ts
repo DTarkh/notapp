@@ -11,7 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
+import { Route as SSlugIndexRouteImport } from './routes/s/$slug/index'
 import { Route as NotesNewIndexRouteImport } from './routes/notes/new/index'
+import { Route as NotesIdIndexRouteImport } from './routes/notes/$id/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -24,9 +26,19 @@ const LoginIndexRoute = LoginIndexRouteImport.update({
   path: '/login/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SSlugIndexRoute = SSlugIndexRouteImport.update({
+  id: '/s/$slug/',
+  path: '/s/$slug/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NotesNewIndexRoute = NotesNewIndexRouteImport.update({
   id: '/notes/new/',
   path: '/notes/new/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotesIdIndexRoute = NotesIdIndexRouteImport.update({
+  id: '/notes/$id/',
+  path: '/notes/$id/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -39,34 +51,55 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login/': typeof LoginIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/notes/$id/': typeof NotesIdIndexRoute
   '/notes/new/': typeof NotesNewIndexRoute
+  '/s/$slug/': typeof SSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/notes/$id': typeof NotesIdIndexRoute
   '/notes/new': typeof NotesNewIndexRoute
+  '/s/$slug': typeof SSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/login/': typeof LoginIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/notes/$id/': typeof NotesIdIndexRoute
   '/notes/new/': typeof NotesNewIndexRoute
+  '/s/$slug/': typeof SSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login/' | '/api/auth/$' | '/notes/new/'
+  fullPaths:
+    | '/'
+    | '/login/'
+    | '/api/auth/$'
+    | '/notes/$id/'
+    | '/notes/new/'
+    | '/s/$slug/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/api/auth/$' | '/notes/new'
-  id: '__root__' | '/' | '/login/' | '/api/auth/$' | '/notes/new/'
+  to: '/' | '/login' | '/api/auth/$' | '/notes/$id' | '/notes/new' | '/s/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/login/'
+    | '/api/auth/$'
+    | '/notes/$id/'
+    | '/notes/new/'
+    | '/s/$slug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginIndexRoute: typeof LoginIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  NotesIdIndexRoute: typeof NotesIdIndexRoute
   NotesNewIndexRoute: typeof NotesNewIndexRoute
+  SSlugIndexRoute: typeof SSlugIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -85,11 +118,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/s/$slug/': {
+      id: '/s/$slug/'
+      path: '/s/$slug'
+      fullPath: '/s/$slug/'
+      preLoaderRoute: typeof SSlugIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/notes/new/': {
       id: '/notes/new/'
       path: '/notes/new'
       fullPath: '/notes/new/'
       preLoaderRoute: typeof NotesNewIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notes/$id/': {
+      id: '/notes/$id/'
+      path: '/notes/$id'
+      fullPath: '/notes/$id/'
+      preLoaderRoute: typeof NotesIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/auth/$': {
@@ -106,7 +153,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginIndexRoute: LoginIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  NotesIdIndexRoute: NotesIdIndexRoute,
   NotesNewIndexRoute: NotesNewIndexRoute,
+  SSlugIndexRoute: SSlugIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
