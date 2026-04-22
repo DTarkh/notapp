@@ -1,4 +1,4 @@
-import { useRouteContext } from '@tanstack/react-router'
+import { Link, useRouteContext } from '@tanstack/react-router'
 
 import styles from './Header.module.css'
 import { useSignOut } from '#/hooks/useSignOut'
@@ -11,11 +11,12 @@ export const Header = () => {
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
-        <div className={styles.brand}>
+        <Link to="/" className={styles.brand}>
           Not<span className={styles.accent}>App</span>
-        </div>
+        </Link>
         {user.id && (
           <div className={styles.userRow}>
+            <Link to="/notes/new">New note</Link>
             <div className={styles.avatar}>
               {user.image ? (
                 <img src={user.image} alt="" />

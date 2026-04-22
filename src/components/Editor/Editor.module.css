@@ -1,0 +1,15 @@
+.editor {
+  margin-top: var(--space-3xl);
+  display: flex;
+  flex-direction: column;
+  width: var(--content-width);
+  margin-inline: auto;
+  gap: var(--spacing-4);
+
+  .buttonContainer {
+    margin-top: var(--spacing-4);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-4);
+  }
+}
