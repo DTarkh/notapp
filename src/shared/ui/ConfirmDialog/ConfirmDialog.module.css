@@ -1,0 +1,42 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+}
+
+.modal {
+  max-width: 420px;
+  width: calc(100% - 32px);
+  background: var(--color-bg, #fff);
+  border: 1px solid var(--color-border, #d4d4d4);
+  border-radius: var(--radius-md, 4px);
+}
+
+.dialog {
+  padding: var(--spacing-4, 16px);
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3, 12px);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--text-lg, 18px);
+  font-weight: 600;
+}
+
+.body {
+  color: var(--color-text-subtle, #525252);
+  font-size: var(--text-sm, 13px);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-2, 8px);
+}

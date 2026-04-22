@@ -1,4 +1,4 @@
-import { Link, useRouteContext } from '@tanstack/react-router'
+import { Link, useLocation, useRouteContext } from '@tanstack/react-router'
 import styles from './Header.module.css'
 import { useSignOut } from '#/hooks/useAuth'
 import { Button } from '#/shared/ui/Button/Button'
@@ -6,6 +6,8 @@ import { Button } from '#/shared/ui/Button/Button'
 export const Header = () => {
   const { mutate: signOut, isPending } = useSignOut()
   const { user } = useRouteContext({ from: '__root__' })
+  const pathname = useLocation({ select: (l) => l.pathname })
+  if (pathname.startsWith('/s/')) return null
   const initial = (user.name ?? user.email ?? '?').slice(0, 1).toUpperCase()
   return (
     <header className={styles.header}>

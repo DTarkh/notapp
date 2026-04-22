@@ -37,7 +37,10 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       getUserQueryOptions(),
     )
 
-    if (!user.id && location.pathname !== '/login') {
+    const isPublic =
+      location.pathname === '/login' || location.pathname.startsWith('/s/')
+
+    if (!user.id && !isPublic) {
       throw redirect({ to: '/login' })
     }
 
