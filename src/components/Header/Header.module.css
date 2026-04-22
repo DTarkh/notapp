@@ -1,5 +1,11 @@
 .header {
-  width: 100%;
+  position: fixed;
+  width: var(--content-width);
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0.5rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-s);
   background-color: var(--color-pre-primary);
 
   .brand {
@@ -19,8 +25,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.75rem 0;
-    width: var(--content-width);
+    padding: 0.75rem 1rem;
+
     margin-inline: auto;
 
     .userRow {

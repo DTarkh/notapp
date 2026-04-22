@@ -15,6 +15,13 @@
   --space-md: 1rem; /* 16px */
   --space-lg: 2rem; /* 32px */
   --space-3xl: 6rem; /* 96px */
+
+  --shadow-s:
+    inset 0 1px 2px #ffffff30, 0 1px 2px #00000030, 0 2px 4px #00000015;
+  --shadow-m:
+    inset 0 1px 2px #ffffff30, 0 2px 4px #00000030, 0 4px 8px #00000015;
+  --shadow-l:
+    inset 0 1px 2px #ffffff30, 0 4px 6px #00000030, 0 6px 10px #00000015;
 }
 html.dark {
   --color-pre-primary: hsl(238, 50%, 15%);
