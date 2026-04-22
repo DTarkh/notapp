@@ -1,17 +1,30 @@
+import { Link } from '@tanstack/react-router'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { notesListQueryOptions } from '#/routes/index'
+import { NoteCard } from '#/components/NoteCard/NoteCard'
 import styles from './Home.module.css'
 
 export const HomePage = () => {
+  const { data: notes } = useSuspenseQuery(notesListQueryOptions())
   return (
     <div className={styles.home}>
-      <section className={styles.intro}>
-        <h1 className={styles.title}>
-          Not<span className={styles.accent}>App</span>
-        </h1>
-        <p className={styles.lead}>
-          Your notes stay organized with a calm interface built from four theme
-          colors: background, text, personality, and accent.
-        </p>
-      </section>
+      <header className={styles.header}>
+        <h1 className={styles.title}>Your notes</h1>
+        <Link to="/notes/new" className={styles.newLink}>
+          + New note
+        </Link>
+      </header>
+      {notes.length === 0 ? (
+        <p className={styles.empty}>No notes yet. Create your first one.</p>
+      ) : (
+        <ul className={styles.list}>
+          {notes.map((n) => (
+            <li key={n.id}>
+              <NoteCard note={n} />
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }
