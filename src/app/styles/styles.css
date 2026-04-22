@@ -2,12 +2,17 @@
 @import './utilities.css';
 
 :root {
+  --color-pre-primary: hsl(238, 50%, 95%);
   --color-primary: hsl(238, 50%, 90%);
   --color-secondary: hsl(238, 50%, 10%);
   --color-tertiary: hsl(298, 80%, 20%);
   --color-accent: hsl(178, 80%, 20%);
+
+  --max-width: 70rem; /* 1120px */
+  --content-width: min(100%, var(--max-width));
 }
 html.dark {
+  --color-pre-primary: hsl(238, 50%, 15%);
   --color-primary: hsl(238, 50%, 10%);
   --color-secondary: hsl(238, 50%, 90%);
   --color-tertiary: hsl(298, 80%, 80%);
@@ -16,12 +21,8 @@ html.dark {
 
 * {
   box-sizing: border-box;
-}
-
-html,
-body,
-#app {
-  min-height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {

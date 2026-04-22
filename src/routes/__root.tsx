@@ -9,7 +9,6 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import type { QueryClient } from '@tanstack/react-query'
 import { Header } from '#/components/Header/Header'
-import { Main } from '#/components/Main/Main'
 import { getUser } from '#/lib/server'
 import '#/app/styles/styles.css'
 
@@ -53,7 +52,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <Header />
-        <Main>{children}</Main>
+        {children}
         <TanStackDevtools
           config={{
             position: 'bottom-right',

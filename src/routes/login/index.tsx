@@ -28,7 +28,11 @@ function Login() {
           Continue with your Google account to sync notes across devices.
         </p>
         <div className={styles.actions}>
-          <Button onPress={() => signIn()} isDisabled={isPending}>
+          <Button
+            isPending={isPending}
+            onPress={() => signIn()}
+            isDisabled={isPending}
+          >
             Sign in with Google
           </Button>
         </div>
