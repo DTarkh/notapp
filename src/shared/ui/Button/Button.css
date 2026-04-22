@@ -13,6 +13,7 @@
   justify-content: center;
   gap: var(--spacing-1);
   -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
 
   > svg {
     width: calc(var(--spacing) * 4.5);
@@ -43,5 +44,43 @@
     padding: 0 var(--spacing-1);
     border-radius: var(--radius-sm);
     margin-inline-start: var(--spacing-3);
+  }
+}
+
+.react-aria-Button.button-base[data-variant='primary'] {
+  background-color: var(--color-tertiary);
+  box-shadow: none;
+  color: var(--color-primary);
+  font-weight: var(--font-bold);
+
+  &:hover {
+    scale: 1.02;
+    transition: scale 0.2s ease-in-out;
+  }
+}
+
+.react-aria-Button.button-base[data-variant='secondary'] {
+  background-color: var(--color-primary);
+  color: var(--color-tertiary);
+  border: 2px solid var(--color-tertiary);
+  box-shadow: none;
+  font-weight: var(--font-bold);
+
+  &:hover {
+    scale: 1.02;
+    transition: scale 0.2s ease-in-out;
+  }
+}
+
+.react-aria-Button.button-base[data-variant='tertiary'] {
+  background-color: var(--color-primary);
+  color: var(--color-tertiary);
+  box-shadow: none;
+
+  font-weight: var(--font-semibold);
+
+  &:hover {
+    scale: 1.02;
+    transition: scale 0.2s ease-in-out;
   }
 }

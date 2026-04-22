@@ -17,7 +17,7 @@
     font-weight: 800;
 
     .accent {
-      color: var(--color-tertiary);
+      color: var(--color-accent);
     }
   }
 

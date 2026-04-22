@@ -1,4 +1,9 @@
-import { Link, useLocation, useRouteContext } from '@tanstack/react-router'
+import {
+  Link,
+  useLocation,
+  useRouteContext,
+  useRouter,
+} from '@tanstack/react-router'
 import styles from './Header.module.css'
 import { useSignOut } from '#/hooks/useAuth'
 import { Button } from '#/shared/ui/Button/Button'
@@ -8,6 +13,7 @@ export const Header = () => {
   const { mutate: signOut, isPending } = useSignOut()
   const { user } = useRouteContext({ from: '__root__' })
   const pathname = useLocation({ select: (l) => l.pathname })
+  const router = useRouter()
   if (pathname.startsWith('/s/')) return null
   const initial = (user.name ?? user.email ?? '?').slice(0, 1).toUpperCase()
   return (
@@ -18,7 +24,13 @@ export const Header = () => {
         </Link>
         {user.id && (
           <div className={styles.userRow}>
-            <Link to="/notes/new">New note</Link>
+            <Button
+              variant="tertiary"
+              onPress={() => router.navigate({ to: '/notes/new' })}
+            >
+              New note
+            </Button>
+
             <div className={styles.avatar}>
               {user.image ? (
                 <img src={user.image} alt="" />
@@ -26,7 +38,11 @@ export const Header = () => {
                 <span className={styles.avatarInitial}>{initial}</span>
               )}
             </div>
-            <Button onPress={() => signOut()} isDisabled={isPending}>
+            <Button
+              variant="primary"
+              onPress={() => signOut()}
+              isDisabled={isPending}
+            >
               Sign out
             </Button>
             <ThemeToggle />

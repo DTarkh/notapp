@@ -1,18 +1,23 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useRouter } from '@tanstack/react-router'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { notesListQueryOptions } from '#/routes/_authenticated/index'
 import { NoteCard } from '#/components/NoteCard/NoteCard'
 import styles from './Home.module.css'
+import { Button } from '#/shared/ui/Button/Button'
 
 export const HomePage = () => {
   const { data: notes } = useSuspenseQuery(notesListQueryOptions())
+  const router = useRouter()
   return (
     <div className={styles.home}>
       <header className={styles.header}>
         <h1 className={styles.title}>Your notes</h1>
-        <Link to="/notes/new" className={styles.newLink}>
+        <Button
+          variant="secondary"
+          onPress={() => router.navigate({ to: '/notes/new' })}
+        >
           + New note
-        </Link>
+        </Button>
       </header>
       {notes.length === 0 ? (
         <p className={styles.empty}>No notes yet. Create your first one.</p>
