@@ -4,7 +4,7 @@ import { Editor } from '#/components/Editor/Editor'
 import { createNote } from '#/lib/server'
 import type { CreateNoteInput } from '#/lib/schemas/notes'
 
-export const Route = createFileRoute('/notes/new/')({
+export const Route = createFileRoute('/_authenticated/notes/new/')({
   component: NewNote,
 })
 

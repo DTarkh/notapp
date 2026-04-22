@@ -18,7 +18,7 @@ const noteQueryOptions = (id: string) =>
     queryFn: () => getNote({ data: { id } }),
   })
 
-export const Route = createFileRoute('/notes/$id/')({
+export const Route = createFileRoute('/_authenticated/notes/$id/')({
   loader: ({ context, params }) =>
     context.queryClient.ensureQueryData(noteQueryOptions(params.id)),
   component: NoteEditor,

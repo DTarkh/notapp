@@ -31,6 +31,16 @@ html.dark {
   --color-accent: hsl(178, 80%, 80%);
 }
 
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --color-pre-primary: hsl(238, 50%, 15%);
+    --color-primary: hsl(238, 50%, 10%);
+    --color-secondary: hsl(238, 50%, 90%);
+    --color-tertiary: hsl(298, 80%, 80%);
+    --color-accent: hsl(178, 80%, 80%);
+  }
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

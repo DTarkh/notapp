@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { notesListQueryOptions } from '#/routes/index'
+import { notesListQueryOptions } from '#/routes/_authenticated/index'
 import { NoteCard } from '#/components/NoteCard/NoteCard'
 import styles from './Home.module.css'
 

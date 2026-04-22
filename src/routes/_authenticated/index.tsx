@@ -9,7 +9,7 @@ export const notesListQueryOptions = () =>
     queryFn: () => getNotes({ data: { sort: 'newest' } }),
   })
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/_authenticated/')({
   loader: ({ context }) =>
     context.queryClient.ensureQueryData(notesListQueryOptions()),
   component: HomePage,

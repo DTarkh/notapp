@@ -2,6 +2,7 @@ import { Link, useLocation, useRouteContext } from '@tanstack/react-router'
 import styles from './Header.module.css'
 import { useSignOut } from '#/hooks/useAuth'
 import { Button } from '#/shared/ui/Button/Button'
+import { ThemeToggle } from '#/features/themeToggle/ui/ThemeToggle'
 
 export const Header = () => {
   const { mutate: signOut, isPending } = useSignOut()
@@ -28,6 +29,7 @@ export const Header = () => {
             <Button onPress={() => signOut()} isDisabled={isPending}>
               Sign out
             </Button>
+            <ThemeToggle />
           </div>
         )}
       </nav>

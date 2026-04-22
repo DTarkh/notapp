@@ -9,16 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as SSlugIndexRouteImport } from './routes/s/$slug/index'
-import { Route as NotesNewIndexRouteImport } from './routes/notes/new/index'
-import { Route as NotesIdIndexRouteImport } from './routes/notes/$id/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as AuthenticatedNotesNewIndexRouteImport } from './routes/_authenticated/notes/new/index'
+import { Route as AuthenticatedNotesIdIndexRouteImport } from './routes/_authenticated/notes/$id/index'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginIndexRoute = LoginIndexRouteImport.update({
@@ -26,19 +26,14 @@ const LoginIndexRoute = LoginIndexRouteImport.update({
   path: '/login/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const SSlugIndexRoute = SSlugIndexRouteImport.update({
   id: '/s/$slug/',
   path: '/s/$slug/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NotesNewIndexRoute = NotesNewIndexRouteImport.update({
-  id: '/notes/new/',
-  path: '/notes/new/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NotesIdIndexRoute = NotesIdIndexRouteImport.update({
-  id: '/notes/$id/',
-  path: '/notes/$id/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -46,31 +41,44 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedNotesNewIndexRoute =
+  AuthenticatedNotesNewIndexRouteImport.update({
+    id: '/notes/new/',
+    path: '/notes/new/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedNotesIdIndexRoute =
+  AuthenticatedNotesIdIndexRouteImport.update({
+    id: '/notes/$id/',
+    path: '/notes/$id/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof AuthenticatedIndexRoute
   '/login/': typeof LoginIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/notes/$id/': typeof NotesIdIndexRoute
-  '/notes/new/': typeof NotesNewIndexRoute
   '/s/$slug/': typeof SSlugIndexRoute
+  '/notes/$id/': typeof AuthenticatedNotesIdIndexRoute
+  '/notes/new/': typeof AuthenticatedNotesNewIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/': typeof AuthenticatedIndexRoute
   '/login': typeof LoginIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/notes/$id': typeof NotesIdIndexRoute
-  '/notes/new': typeof NotesNewIndexRoute
   '/s/$slug': typeof SSlugIndexRoute
+  '/notes/$id': typeof AuthenticatedNotesIdIndexRoute
+  '/notes/new': typeof AuthenticatedNotesNewIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/_authenticated/': typeof AuthenticatedIndexRoute
   '/login/': typeof LoginIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/notes/$id/': typeof NotesIdIndexRoute
-  '/notes/new/': typeof NotesNewIndexRoute
   '/s/$slug/': typeof SSlugIndexRoute
+  '/_authenticated/notes/$id/': typeof AuthenticatedNotesIdIndexRoute
+  '/_authenticated/notes/new/': typeof AuthenticatedNotesNewIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -78,37 +86,36 @@ export interface FileRouteTypes {
     | '/'
     | '/login/'
     | '/api/auth/$'
+    | '/s/$slug/'
     | '/notes/$id/'
     | '/notes/new/'
-    | '/s/$slug/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/api/auth/$' | '/notes/$id' | '/notes/new' | '/s/$slug'
+  to: '/' | '/login' | '/api/auth/$' | '/s/$slug' | '/notes/$id' | '/notes/new'
   id:
     | '__root__'
-    | '/'
+    | '/_authenticated'
+    | '/_authenticated/'
     | '/login/'
     | '/api/auth/$'
-    | '/notes/$id/'
-    | '/notes/new/'
     | '/s/$slug/'
+    | '/_authenticated/notes/$id/'
+    | '/_authenticated/notes/new/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   LoginIndexRoute: typeof LoginIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
-  NotesIdIndexRoute: typeof NotesIdIndexRoute
-  NotesNewIndexRoute: typeof NotesNewIndexRoute
   SSlugIndexRoute: typeof SSlugIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login/': {
@@ -118,25 +125,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/': {
+      id: '/_authenticated/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/s/$slug/': {
       id: '/s/$slug/'
       path: '/s/$slug'
       fullPath: '/s/$slug/'
       preLoaderRoute: typeof SSlugIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/notes/new/': {
-      id: '/notes/new/'
-      path: '/notes/new'
-      fullPath: '/notes/new/'
-      preLoaderRoute: typeof NotesNewIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/notes/$id/': {
-      id: '/notes/$id/'
-      path: '/notes/$id'
-      fullPath: '/notes/$id/'
-      preLoaderRoute: typeof NotesIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/auth/$': {
@@ -146,15 +146,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/notes/new/': {
+      id: '/_authenticated/notes/new/'
+      path: '/notes/new'
+      fullPath: '/notes/new/'
+      preLoaderRoute: typeof AuthenticatedNotesNewIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/notes/$id/': {
+      id: '/_authenticated/notes/$id/'
+      path: '/notes/$id'
+      fullPath: '/notes/$id/'
+      preLoaderRoute: typeof AuthenticatedNotesIdIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedNotesIdIndexRoute: typeof AuthenticatedNotesIdIndexRoute
+  AuthenticatedNotesNewIndexRoute: typeof AuthenticatedNotesNewIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedNotesIdIndexRoute: AuthenticatedNotesIdIndexRoute,
+  AuthenticatedNotesNewIndexRoute: AuthenticatedNotesNewIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   LoginIndexRoute: LoginIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
-  NotesIdIndexRoute: NotesIdIndexRoute,
-  NotesNewIndexRoute: NotesNewIndexRoute,
   SSlugIndexRoute: SSlugIndexRoute,
 }
 export const routeTree = rootRouteImport

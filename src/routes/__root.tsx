@@ -8,12 +8,14 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import type { QueryClient } from '@tanstack/react-query'
-import { Header } from '#/components/Header/Header'
 import '#/app/styles/styles.css'
 import { getUserQueryOptions } from '#/hooks/useAuth'
+import { getThemeServerFn } from '#/features/themeToggle/model/theme.service'
+import type { Theme } from '#/features/themeToggle/model/theme.schema'
 
 interface MyRouterContext {
   queryClient: QueryClient
+  theme: Theme
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
@@ -33,6 +35,8 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   }),
   shellComponent: RootDocument,
   beforeLoad: async ({ location, context }) => {
+    const theme = await getThemeServerFn()
+
     const user = await context.queryClient.ensureQueryData(
       getUserQueryOptions(),
     )
@@ -44,18 +48,18 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       throw redirect({ to: '/login' })
     }
 
-    return { user }
+    return { user, theme } as const
   },
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const { theme } = Route.useRouteContext()
   return (
-    <html lang="en">
+    <html lang="en" className={theme}>
       <head>
         <HeadContent />
       </head>
       <body>
-        <Header />
         {children}
         <TanStackDevtools
           config={{
