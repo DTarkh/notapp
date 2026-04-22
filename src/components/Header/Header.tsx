@@ -1,7 +1,6 @@
 import { Link, useRouteContext } from '@tanstack/react-router'
-
 import styles from './Header.module.css'
-import { useSignOut } from '#/hooks/useSignOut'
+import { useSignOut } from '#/hooks/useAuth'
 import { Button } from '#/shared/ui/Button/Button'
 
 export const Header = () => {

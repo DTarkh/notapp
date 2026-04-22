@@ -1,4 +1,4 @@
-import { useSignIn } from '#/hooks/useSignIn'
+import { useSignIn } from '#/hooks/useAuth'
 import { getUser } from '#/lib/server'
 import { Button } from '#/shared/ui/Button/Button'
 import { createFileRoute, redirect } from '@tanstack/react-router'

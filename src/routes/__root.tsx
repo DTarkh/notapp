@@ -9,8 +9,8 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import type { QueryClient } from '@tanstack/react-query'
 import { Header } from '#/components/Header/Header'
-import { getUser } from '#/lib/server'
 import '#/app/styles/styles.css'
+import { getUserQueryOptions } from '#/hooks/useAuth'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -32,14 +32,15 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     ],
   }),
   shellComponent: RootDocument,
-  beforeLoad: async ({ location }) => {
-    const user = await getUser()
-    if (!user.id) {
-      if (location.pathname !== '/login') {
-        throw redirect({ to: '/login' })
-      }
-      return { user }
+  beforeLoad: async ({ location, context }) => {
+    const user = await context.queryClient.ensureQueryData(
+      getUserQueryOptions(),
+    )
+
+    if (!user.id && location.pathname !== '/login') {
+      throw redirect({ to: '/login' })
     }
+
     return { user }
   },
 })
