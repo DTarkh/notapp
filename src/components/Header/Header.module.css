@@ -1,5 +1,6 @@
 .header {
   position: fixed;
+  z-index: 10;
   width: var(--content-width);
   left: 50%;
   transform: translateX(-50%);
