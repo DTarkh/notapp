@@ -50,14 +50,15 @@ const NoteEditor = () => {
 
   return (
     <>
+      
+
+      <div className={styles.editor}>
       <ShareBar
         isPublic={note.isPublic}
         slug={note.publicSlug}
         onToggle={() => share.mutate()}
         isPending={share.isPending}
       />
-
-      <div className={styles.editor}>
         <div className={styles.header}>
           <h1 className={styles.title}>{note.title}</h1>
 
