@@ -9,48 +9,30 @@
   box-shadow: var(--shadow-s);
   background-color: var(--color-pre-primary);
 
-  .brand {
-    font-weight: 600;
-    font-size: 1.05rem;
-    letter-spacing: -0.02em;
-    color: var(--color-secondary);
-    text-transform: uppercase;
-    font-weight: 800;
-
-    .accent {
-      color: var(--color-accent);
-    }
-  }
-
-  .nav {
+  nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0.75rem 1rem;
-
     margin-inline: auto;
+
+    .brand {
+      font-weight: 600;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      color: var(--color-secondary);
+      text-transform: uppercase;
+      font-weight: 800;
+
+      .accent {
+        color: var(--color-accent);
+      }
+    }
 
     .userRow {
       display: flex;
       align-items: center;
       gap: 0.75rem;
-
-      .avatar {
-        flex-shrink: 0;
-        width: 2.25rem;
-        height: 2.25rem;
-        border-radius: 100%;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-      }
 
       .avatarInitial {
         font-size: 0.95rem;

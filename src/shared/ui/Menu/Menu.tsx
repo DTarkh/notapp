@@ -29,7 +29,7 @@ export function MenuTrigger(props: MenuTriggerProps) {
   return (
     <AriaMenuTrigger {...props}>
       {trigger}
-      <Popover>{menu}</Popover>
+      <Popover placement="bottom">{menu}</Popover>
     </AriaMenuTrigger>
   )
 }

@@ -13,6 +13,7 @@
       --spacing-3
     );
   grid-auto-rows: max-content;
+  background-color: var(--color-primary);
 
   &:has(> [data-selection-mode]) {
     --check-width: var(--spacing-6);
@@ -46,6 +47,7 @@
   align-items: center;
   forced-color-adjust: none;
   -webkit-tap-highlight-color: transparent;
+  color: var(--color-secondary);
 
   > svg:not(.lucide-check, .lucide-dot, .lucide-chevron-right) {
     grid-area: icon;
@@ -69,8 +71,8 @@
   }
 
   &[data-focused] {
-    background: var(--highlight-background);
-    color: var(--highlight-foreground);
+    background: var(--color-accent);
+    color: var(--color-primary);
   }
 
   &[data-selection-mode] {

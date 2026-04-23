@@ -16,7 +16,7 @@ export const ThemeToggle = () => {
   }
 
   return (
-    <Button onClick={toggleTheme}>
+    <Button variant="tertiary" onClick={toggleTheme}>
       {theme === 'dark' ? <Moon /> : theme === 'light' ? <Sun /> : <Monitor />}
     </Button>
   )
