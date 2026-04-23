@@ -5,11 +5,12 @@
   padding-block: var(--space-3xl, 64px);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-5);
+  gap: var(--spacing-3);
   flex-direction: row;
 
   .firstColumn {
     flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-5);
@@ -17,8 +18,7 @@
     header {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      gap: var(--spacing-4, 16px);
+      align-items: bottom;
 
       h1 {
         margin: 0;
@@ -32,9 +32,24 @@
       list-style: none;
       margin: 0;
       padding: 0;
-      display: grid;
-      gap: var(--spacing-3, 12px);
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+
+      border-radius: var(--radius-md, 4px);
+      overflow: hidden;
+      background: var(--color-pre-primary);
+
+      & > li {
+        min-width: 0;
+        width: 100%;
+        border-bottom: 1px solid var(--color-border, #d4d4d4);
+      }
+
+      & > li:last-child {
+        border-bottom: none;
+      }
     }
 
     .empty {
@@ -47,10 +62,25 @@
   }
 
   .secondColumn {
+    flex-shrink: 0;
     width: min(30%, 300px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-5);
 
-    h1 {
-      font-size: var(--fs-sm);
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: bottom;
+      h1 {
+        font-size: var(--fs-sm);
+      }
+    }
+
+    .usersDashboard {
+      padding: 10px 16px;
+      background: var(--color-pre-primary);
+      border-radius: var(--radius-md, 4px);
     }
   }
 }
