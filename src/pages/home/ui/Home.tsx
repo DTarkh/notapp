@@ -11,27 +11,32 @@ export const HomePage = () => {
   const router = useRouter()
   return (
     <div className={styles.home}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Your notes</h1>
-        <Button
-          variant="accent"
-          onPress={() => router.navigate({ to: '/notes/new' })}
-        >
-          + New note
-        </Button>
-      </header>
-      {isPending && <ProgressCircle isIndeterminate size={24} />}
-      {notes?.length === 0 ? (
-        <p className={styles.empty}>No notes yet. Create your first one.</p>
-      ) : (
-        <ul className={styles.list}>
-          {notes?.map((n) => (
-            <li key={n.id}>
-              <NoteCard note={n} />
-            </li>
-          ))}
-        </ul>
-      )}
+      <div className={styles.firstColumn}>
+        <header>
+          <h1>Your notes</h1>
+          <Button
+            variant="accent"
+            onPress={() => router.navigate({ to: '/notes/new' })}
+          >
+            + New note
+          </Button>
+        </header>
+        {isPending && <ProgressCircle isIndeterminate size={24} />}
+        {notes?.length === 0 ? (
+          <p className={styles.empty}>No notes yet. Create your first one.</p>
+        ) : (
+          <ul className={styles.list}>
+            {notes?.map((n) => (
+              <li key={n.id}>
+                <NoteCard note={n} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <div className={styles.secondColumn}>
+        <h1>Users Dashboard</h1>
+      </div>
     </div>
   )
 }

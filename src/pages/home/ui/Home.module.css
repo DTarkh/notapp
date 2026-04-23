@@ -5,50 +5,52 @@
   padding-block: var(--space-3xl, 64px);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-4, 16px);
-}
+  gap: var(--spacing-5);
+  flex-direction: row;
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: var(--spacing-4, 16px);
-}
+  .firstColumn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-5);
 
-.title {
-  margin: 0;
-  font-size: var(--text-2xl, 28px);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: var(--spacing-4, 16px);
 
-.newLink {
-  font-family: var(--font-mono, monospace);
-  font-size: var(--text-sm, 13px);
-  color: var(--color-accent, #2563eb);
-  text-decoration: none;
-  padding: 6px 10px;
-  border: 1px solid var(--color-border, #d4d4d4);
-  border-radius: var(--radius-sm, 2px);
-}
+      h1 {
+        margin: 0;
+        font-size: var(--fs-sm);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+    }
 
-.newLink:hover {
-  border-color: var(--color-accent, #2563eb);
-}
+    .list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: var(--spacing-3, 12px);
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
 
-.list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: var(--spacing-3, 12px);
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-}
+    .empty {
+      padding: var(--spacing-8, 32px);
+      text-align: center;
+      color: var(--color-text-muted, #a3a3a3);
+      border: 1px dashed var(--color-border, #d4d4d4);
+      border-radius: var(--radius-md, 4px);
+    }
+  }
 
-.empty {
-  padding: var(--spacing-8, 32px);
-  text-align: center;
-  color: var(--color-text-muted, #a3a3a3);
-  border: 1px dashed var(--color-border, #d4d4d4);
-  border-radius: var(--radius-md, 4px);
+  .secondColumn {
+    width: min(30%, 300px);
+
+    h1 {
+      font-size: var(--fs-sm);
+    }
+  }
 }
