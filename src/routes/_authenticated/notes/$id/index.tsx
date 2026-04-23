@@ -67,7 +67,7 @@ function NoteEditor() {
         isSaving={save.isPending}
       />
       <div style={{ display: 'flex', justifyContent: 'flex-end', padding: 12 }}>
-        <Button variant="quiet" onPress={() => setConfirmOpen(true)}>
+        <Button variant="secondary" onPress={() => setConfirmOpen(true)}>
           Delete
         </Button>
       </div>

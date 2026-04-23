@@ -1,9 +1,4 @@
-import {
-  Dialog,
-  Heading,
-  Modal,
-  ModalOverlay,
-} from 'react-aria-components'
+import { Dialog, Heading, Modal, ModalOverlay } from 'react-aria-components'
 import type { ReactNode } from 'react'
 import { Button } from '../Button/Button'
 import styles from './ConfirmDialog.module.css'
