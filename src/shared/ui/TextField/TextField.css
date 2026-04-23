@@ -13,16 +13,19 @@
   border: none;
   border-radius: var(--radius);
   font: var(--font-size) system-ui;
-  color: var(--field-text-color);
+  color: var(--color-secondary);
+  background-color: var(--color-pre-primary);
+  box-shadow: none;
   outline: none;
   -webkit-tap-highlight-color: transparent;
+  box-shadow: var(--shadow-s);
 
   &::placeholder {
-    color: var(--text-color-placeholder);
+    color: var(--color-secondary);
   }
 
   &[data-focused] {
-    outline: 2px solid var(--focus-ring-color);
+    outline: 2px solid var(--color-accent);
     outline-offset: -1px;
   }
 
@@ -37,4 +40,8 @@
 .react-aria-TextArea {
   min-height: 64px;
   padding: var(--spacing-2) var(--spacing-3);
+}
+
+.label {
+  color: var(--color-secondary);
 }
