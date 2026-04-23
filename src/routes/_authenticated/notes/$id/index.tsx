@@ -11,6 +11,8 @@ import { Button } from '#/shared/ui/Button/Button'
 import { ShareBar } from '#/shared/ui/ShareBar/ShareBar'
 import { ConfirmDialog } from '#/shared/ui/ConfirmDialog/ConfirmDialog'
 import { deleteNote, getNote, toggleShare, updateNote } from '#/lib/server'
+import MDEditor from '@uiw/react-md-editor'
+import styles from './NoteEditor.module.css'
 
 const noteQueryOptions = (id: string) =>
   queryOptions({
@@ -18,14 +20,8 @@ const noteQueryOptions = (id: string) =>
     queryFn: () => getNote({ data: { id } }),
   })
 
-export const Route = createFileRoute('/_authenticated/notes/$id/')({
-  loader: ({ context, params }) =>
-    context.queryClient.ensureQueryData(noteQueryOptions(params.id)),
-  component: NoteEditor,
-  errorComponent: () => <p>Note not found.</p>,
-})
-
-function NoteEditor() {
+const NoteEditor = () => {
+  const [isEditing, setIsEditing] = useState(false)
   const { id } = Route.useParams()
   const navigate = useNavigate()
   const qc = useQueryClient()
@@ -60,27 +56,56 @@ function NoteEditor() {
         onToggle={() => share.mutate()}
         isPending={share.isPending}
       />
-      <Editor
-        initialTitle={note.title}
-        initialContent={note.content}
-        onSave={save.mutate}
-        isSaving={save.isPending}
-      />
-      <div style={{ display: 'flex', justifyContent: 'flex-end', padding: 12 }}>
-        <Button variant="secondary" onPress={() => setConfirmOpen(true)}>
-          Delete
-        </Button>
+
+      <div className={styles.editor}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>{note.title}</h1>
+
+          <div className={styles.actions}>
+            <Button
+              variant="secondary"
+              onPress={() => setIsEditing((prev) => !prev)}
+            >
+              {isEditing ? 'Cancel' : 'Edit'}
+            </Button>
+
+            <Button variant="secondary" onPress={() => setConfirmOpen(true)}>
+              Delete
+            </Button>
+          </div>
+
+          <ConfirmDialog
+            isOpen={confirmOpen}
+            onOpenChange={setConfirmOpen}
+            onConfirm={() => del.mutate()}
+            title="Delete note"
+            confirmLabel="Delete"
+            isPending={del.isPending}
+          >
+            Delete this note? This cannot be undone.
+          </ConfirmDialog>
+        </div>
+
+        {!isEditing && <MDEditor.Markdown source={note.content} />}
       </div>
-      <ConfirmDialog
-        isOpen={confirmOpen}
-        onOpenChange={setConfirmOpen}
-        onConfirm={() => del.mutate()}
-        title="Delete note"
-        confirmLabel="Delete"
-        isPending={del.isPending}
-      >
-        Delete this note? This cannot be undone.
-      </ConfirmDialog>
+
+      {isEditing && (
+        <>
+          <Editor
+            initialTitle={note.title}
+            initialContent={note.content}
+            onSave={save.mutate}
+            isSaving={save.isPending}
+          />
+        </>
+      )}
     </>
   )
 }
+
+export const Route = createFileRoute('/_authenticated/notes/$id/')({
+  loader: ({ context, params }) =>
+    context.queryClient.ensureQueryData(noteQueryOptions(params.id)),
+  component: NoteEditor,
+  errorComponent: () => <p>Note not found.</p>,
+})

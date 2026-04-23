@@ -27,7 +27,7 @@ export const NoteCard = ({ note }: { note: Note }) => (
     <div className={styles.footer}>
       <time className={styles.date}>{formatDate(note.createdAt)}</time>
       <Link to="/notes/$id" params={{ id: note.id }} className={styles.edit}>
-        <Button variant="quiet">Edit</Button>
+        <Button variant="primary">View</Button>
       </Link>
     </div>
   </article>

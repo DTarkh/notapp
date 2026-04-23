@@ -1,11 +1,6 @@
 import { useState } from 'react'
 import MDEditor from '@uiw/react-md-editor'
-import {
-  FieldError,
-  Input,
-  Label,
-  TextField,
-} from 'react-aria-components'
+import { FieldError, Input, Label, TextField } from 'react-aria-components'
 import styles from './Editor.module.css'
 import { Button } from '#/shared/ui/Button/Button'
 import { createNoteInput } from '#/lib/schemas/notes'
@@ -53,12 +48,7 @@ export const Editor = ({
         <FieldError />
       </TextField>
 
-      <MDEditor
-        value={value}
-        onChange={setValue}
-        preview="live"
-        height={400}
-      />
+      <MDEditor value={value} onChange={setValue} preview="live" height={400} />
 
       {error && <p role="alert">{error}</p>}
 

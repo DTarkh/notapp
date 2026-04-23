@@ -48,9 +48,9 @@ export const getNote = createServerFn({ method: 'GET' })
   .inputValidator(noteIdInput)
   .handler(async ({ data, context }) => {
     const userId = requireUser(context)
-    const row = (
-      await db.select().from(notes).where(eq(notes.id, data.id))
-    ).at(0)
+    const row = (await db.select().from(notes).where(eq(notes.id, data.id))).at(
+      0,
+    )
     if (!row) throw new Error('NOT_FOUND')
     if (row.userId !== userId) throw new Error('FORBIDDEN')
     return row
