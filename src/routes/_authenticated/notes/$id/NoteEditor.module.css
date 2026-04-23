@@ -4,6 +4,12 @@
   margin-inline: auto;
 }
 
+.pending {
+  display: flex;
+  justify-content: center;
+  padding-block: var(--space-xl);
+}
+
 .header {
   display: flex;
   justify-content: space-between;
