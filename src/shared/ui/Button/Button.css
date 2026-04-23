@@ -84,3 +84,15 @@
     transition: scale 0.2s ease-in-out;
   }
 }
+
+.react-aria-Button.button-base[data-variant='accent'] {
+  background-color: var(--color-accent);
+  box-shadow: none;
+  color: var(--color-primary);
+  font-weight: var(--font-bold);
+
+  &:hover {
+    scale: 1.02;
+    transition: scale 0.2s ease-in-out;
+  }
+}

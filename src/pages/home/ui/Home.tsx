@@ -1,5 +1,5 @@
-import {  useRouter } from '@tanstack/react-router'
-import { useQuery} from '@tanstack/react-query'
+import { useRouter } from '@tanstack/react-router'
+import { useQuery } from '@tanstack/react-query'
 import { notesListQueryOptions } from '#/shared/queryOptions/queryOptions'
 import { NoteCard } from '#/components/NoteCard/NoteCard'
 import styles from './Home.module.css'
@@ -14,13 +14,13 @@ export const HomePage = () => {
       <header className={styles.header}>
         <h1 className={styles.title}>Your notes</h1>
         <Button
-          variant="secondary"
+          variant="accent"
           onPress={() => router.navigate({ to: '/notes/new' })}
         >
           + New note
         </Button>
       </header>
-    {isPending && <ProgressCircle isIndeterminate size={24}/>}
+      {isPending && <ProgressCircle isIndeterminate size={24} />}
       {notes?.length === 0 ? (
         <p className={styles.empty}>No notes yet. Create your first one.</p>
       ) : (
