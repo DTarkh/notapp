@@ -1,5 +1,7 @@
 @import './theme.css';
 @import './utilities.css';
+/* Prism / GitHub-style token colors for MDEditor preview & MDEditor.Markdown */
+@import '@uiw/react-markdown-preview/markdown.css';
 
 :root {
   --color-pre-primary: hsl(238, 50%, 95%);

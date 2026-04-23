@@ -14,3 +14,8 @@
   display: flex;
   gap: 0.25rem;
 }
+
+/* View-mode markdown only: match page background (see .wmde-markdown in uiw markdown.css) */
+:global(.wmde-markdown).markdownView {
+  background-color: var(--color-primary);
+}

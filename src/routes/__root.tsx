@@ -55,7 +55,11 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 function RootDocument({ children }: { children: React.ReactNode }) {
   const { theme } = Route.useRouteContext()
   return (
-    <html lang="en" className={theme}>
+    <html
+      lang="en"
+      className={theme}
+      {...(theme === 'auto' ? {} : { 'data-color-mode': theme })}
+    >
       <head>
         <HeadContent />
       </head>

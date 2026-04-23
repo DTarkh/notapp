@@ -86,7 +86,12 @@ const NoteEditor = () => {
           </ConfirmDialog>
         </div>
 
-        {!isEditing && <MDEditor.Markdown source={note.content} />}
+        {!isEditing && (
+          <MDEditor.Markdown
+            source={note.content}
+            className={styles.markdownView}
+          />
+        )}
       </div>
 
       {isEditing && (
