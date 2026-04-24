@@ -5,6 +5,7 @@ export const notesListQueryOptions = () =>
   queryOptions({
     queryKey: ['notes'],
     queryFn: () => getNotes({ data: { sort: 'newest' } }),
+    staleTime: 1000 * 60 * 5,
   })
 
 export const noteQueryOptions = (id: string) =>

@@ -102,3 +102,11 @@
     opacity: 0;
   }
 }
+
+.react-aria-Toast[data-variant='success'] {
+  background: var(--color-accent);
+}
+
+.react-aria-Toast[data-variant='error'] {
+  background: var(--color-tertiary);
+}

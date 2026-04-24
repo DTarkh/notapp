@@ -1,43 +1,36 @@
 import { useState } from 'react'
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query'
+import { createFileRoute } from '@tanstack/react-router'
+import { useQuery } from '@tanstack/react-query'
 import { Editor } from '#/components/Editor/Editor'
 import { Button } from '#/shared/ui/Button/Button'
 import { ShareBar } from '#/shared/ui/ShareBar/ShareBar'
 import { ConfirmDialog } from '#/shared/ui/ConfirmDialog/ConfirmDialog'
-import { deleteNote, toggleShare, updateNote } from '#/lib/server'
 import MDEditor from '@uiw/react-md-editor'
 import styles from './NoteEditor.module.css'
 import { ProgressCircle } from '#/shared/ui/ProgressCircle/ProgressCircle'
-import { noteQueryOptions } from '#/shared/queryOptions/queryOptions'
+import { notesListQueryOptions } from '#/shared/queryOptions/queryOptions'
+import {
+  useDeleteNote,
+  useSaveNote,
+  useShareNote,
+} from '#/shared/hooks/useCrudOperations'
 
 const NoteEditor = () => {
   const [isEditing, setIsEditing] = useState(false)
-  const { id } = Route.useParams()
-  const navigate = useNavigate()
-  const qc = useQueryClient()
-  const { data: note, isPending } = useQuery(noteQueryOptions(id))
-
-  const save = useMutation({
-    mutationFn: (data: { title: string; content: string }) =>
-      updateNote({ data: { id, ...data } }),
-    onSuccess: (row) => qc.setQueryData(['notes', id], row),
-  })
-
-  const share = useMutation({
-    mutationFn: () => toggleShare({ data: { id } }),
-    onSuccess: (row) => qc.setQueryData(['notes', id], row),
-  })
-
   const [confirmOpen, setConfirmOpen] = useState(false)
-  const del = useMutation({
-    mutationFn: () => deleteNote({ data: { id } }),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ['notes'] })
-      setConfirmOpen(false)
-      navigate({ to: '/' })
-    },
-  })
+  const { id } = Route.useParams()
+
+  const { data: notes, isPending } = useQuery(notesListQueryOptions())
+  const note = notes?.find((n) => n.id === id)
+
+  const { mutate: saveNote, isPending: isSaving } = useSaveNote(id, setIsEditing)
+
+  const { mutate: shareNote, isPending: isSharing } = useShareNote(id)
+
+  const { mutate: deleteNote, isPending: isDeleting } = useDeleteNote(
+    id,
+    setConfirmOpen,
+  )
 
   return (
     <>
@@ -53,8 +46,8 @@ const NoteEditor = () => {
             <ShareBar
               isPublic={note.isPublic}
               slug={note.publicSlug}
-              onToggle={() => share.mutate()}
-              isPending={share.isPending}
+              onToggle={() => shareNote()}
+              isPending={isSharing}
             />
 
             <div className={styles.header}>
@@ -79,10 +72,10 @@ const NoteEditor = () => {
               <ConfirmDialog
                 isOpen={confirmOpen}
                 onOpenChange={setConfirmOpen}
-                onConfirm={() => del.mutate()}
+                onConfirm={() => deleteNote()}
                 title="Delete note"
                 confirmLabel="Delete"
-                isPending={del.isPending}
+                isPending={isDeleting}
               >
                 Delete this note? This cannot be undone.
               </ConfirmDialog>
@@ -102,8 +95,8 @@ const NoteEditor = () => {
         <Editor
           initialTitle={note.title}
           initialContent={note.content}
-          onSave={save.mutate}
-          isSaving={save.isPending}
+          onSave={saveNote}
+          isSaving={isSaving}
         />
       )}
     </>

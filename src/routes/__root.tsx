@@ -12,6 +12,7 @@ import '#/app/styles/styles.css'
 import { getUserQueryOptions } from '#/hooks/useAuth'
 import { getThemeServerFn } from '#/features/themeToggle/model/theme.service'
 import type { Theme } from '#/features/themeToggle/model/theme.schema'
+import { MyToastRegion } from '#/shared/ui/Toast/Toast'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -65,9 +66,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
+        <MyToastRegion />
         <TanStackDevtools
           config={{
-            position: 'bottom-right',
+            position: 'bottom-left',
           }}
           plugins={[
             {

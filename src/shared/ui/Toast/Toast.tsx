@@ -14,13 +14,14 @@ import type { CSSProperties } from 'react'
 
 // Define the type for your toast content. This interface defines the properties of your toast content, affecting what you
 // pass to the queue calls as arguments.
-interface MyToastContent {
+export interface ToastContent {
   title: string
   description?: string
+  variant?: 'success' | 'error'
 }
 
 // This is a global toast queue, to be imported and called where ever you want to queue a toast via queue.add().
-export const queue = new ToastQueue<MyToastContent>({
+export const queue = new ToastQueue<ToastContent>({
   // Wrap state updates in a CSS view transition.
   wrapUpdate(fn) {
     if ('startViewTransition' in document) {
@@ -41,6 +42,7 @@ export function MyToastRegion() {
         <MyToast
           toast={toast}
           style={{ viewTransitionName: toast.key } as CSSProperties}
+          data-variant={toast.content.variant ?? 'success'}
         >
           <ToastContent>
             <Text slot="title">{toast.content.title}</Text>
@@ -48,7 +50,7 @@ export function MyToastRegion() {
               <Text slot="description">{toast.content.description}</Text>
             )}
           </ToastContent>
-          <Button slot="close" aria-label="Close" variant="secondary">
+          <Button slot="close" aria-label="Close" variant="primary">
             <X size={16} />
           </Button>
         </MyToast>
@@ -57,6 +59,6 @@ export function MyToastRegion() {
   )
 }
 
-export function MyToast(props: ToastProps<MyToastContent>) {
+export function MyToast(props: ToastProps<ToastContent>) {
   return <Toast {...props} />
 }

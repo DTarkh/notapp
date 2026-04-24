@@ -39,8 +39,17 @@ export const Editor = ({
 
   return (
     <Form className={styles.editor}>
-    
-      <TextField onChange={setTitle} value={title} label="Title" name="title" validate={value => value.length <= 1 ? 'Please enter a correct title' : null} isRequired placeholder="Enter note title" />
+      <TextField
+        onChange={setTitle}
+        value={title}
+        label="Title"
+        name="title"
+        validate={(value) =>
+          value.length <= 1 ? 'Please enter a correct title' : null
+        }
+        isRequired
+        placeholder="Enter note title"
+      />
 
       <MDEditor value={value} onChange={setValue} preview="live" height={400} />
 

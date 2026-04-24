@@ -1,6 +1,5 @@
-import { Link } from '@tanstack/react-router'
+import { useRouter } from '@tanstack/react-router'
 import type { notes } from '#/db/schema'
-import { Button } from '#/shared/ui/Button/Button'
 import styles from './NoteCard.module.css'
 
 type Note = typeof notes.$inferSelect
@@ -22,10 +21,16 @@ const formatListDateTime = (d: Date | string) => {
 }
 
 export const NoteCard = ({ note }: { note: Note }) => {
+  const router = useRouter()
   const plain = toPlain(note.content)
   const at = new Date(note.createdAt)
   return (
-    <article className={styles.card}>
+    <article
+      className={styles.card}
+      onClick={() =>
+        router.navigate({ to: '/notes/$id', params: { id: note.id } })
+      }
+    >
       <h2 className={styles.title}>{note.title}</h2>
       <p className={styles.preview} title={plain || undefined}>
         {plain}
@@ -34,11 +39,6 @@ export const NoteCard = ({ note }: { note: Note }) => {
         <time className={styles.date} dateTime={at.toISOString()}>
           {formatListDateTime(note.createdAt)}
         </time>
-        <Link to="/notes/$id" params={{ id: note.id }} className={styles.edit}>
-          <Button variant="tertiary" className={styles.viewBtn}>
-            View
-          </Button>
-        </Link>
       </div>
     </article>
   )
