@@ -3,6 +3,7 @@ import styles from './Header.module.css'
 import { Button } from '#/shared/ui/Button/Button'
 import { ThemeToggle } from '#/features/themeToggle/ui/ThemeToggle'
 import { ProfileMenu } from '#/features/profileMenu/ui/ProfileMenu'
+import { FilePenLine } from 'lucide-react'
 
 export const Header = () => {
   const { user } = useRouteContext({ from: '__root__' })
@@ -19,7 +20,9 @@ export const Header = () => {
             <Button
               variant="tertiary"
               onPress={() => router.navigate({ to: '/notes/new' })}
+              className={styles.btn}
             >
+              <FilePenLine size={18} />
               New note
             </Button>
             <ThemeToggle />

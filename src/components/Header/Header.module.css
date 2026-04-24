@@ -34,6 +34,11 @@
       align-items: center;
       gap: 0.75rem;
 
+      .btn {
+        width: fit-content;
+        padding: 0 var(--spacing-3);
+      }
+
       .avatarInitial {
         font-size: 0.95rem;
         font-weight: 700;

@@ -1,7 +1,7 @@
 import { useSignOut } from '#/hooks/useAuth'
 import { Menu, MenuItem, MenuSection, MenuTrigger } from '#/shared/ui/Menu/Menu'
 import { Link, useRouteContext, useRouter } from '@tanstack/react-router'
-import { LogOut, User, Link as LinkIcon } from 'lucide-react'
+import { LogOut, User, Link as LinkIcon, FilePenLine } from 'lucide-react'
 import { Button, Separator, Text } from 'react-aria-components'
 import styles from './ProfileMenu.module.css'
 import { Popover } from '#/shared/ui/Popover/Popover'
@@ -25,7 +25,7 @@ export const ProfileMenu = () => {
         <Separator />
         <MenuSection>
           <MenuItem textValue="Profile">
-            <LinkIcon />
+            <FilePenLine />
             <Text
               slot="label"
               onClick={() => router.navigate({ to: '/notes/new' })}
