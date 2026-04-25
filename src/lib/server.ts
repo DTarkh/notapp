@@ -1,7 +1,7 @@
 import { createServerFn } from '@tanstack/react-start'
 import { and, asc, desc, eq, ilike, or } from 'drizzle-orm'
 import { db } from '#/db'
-import { notes } from '#/db/schema'
+import { notes, user } from '#/db/schema'
 import { authMiddleware } from './middleware'
 import {
   createNoteInput,
@@ -24,6 +24,61 @@ const requireUser = (ctx: { user: { id?: string } }) => {
   if (!ctx.user.id) throw new Error('UNAUTHORIZED')
   return ctx.user.id
 }
+
+/** All public notes across every user, with author display fields (signed-in callers only). */
+export const getAllNotes = createServerFn({ method: 'GET' })
+  .middleware([authMiddleware])
+  .handler(async ({ context }) => {
+    requireUser(context)
+    const rows = await db
+      .select({
+        id: notes.id,
+        userId: notes.userId,
+        title: notes.title,
+        content: notes.content,
+        isPublic: notes.isPublic,
+        publicSlug: notes.publicSlug,
+        createdAt: notes.createdAt,
+        updatedAt: notes.updatedAt,
+        authorName: user.name,
+        authorEmail: user.email,
+        authorImage: user.image,
+      })
+      .from(notes)
+      .innerJoin(user, eq(notes.userId, user.id))
+      .where(eq(notes.isPublic, true))
+      .orderBy(desc(notes.createdAt))
+
+    return rows.map(
+      ({
+        authorName,
+        authorEmail,
+        authorImage,
+        id,
+        userId,
+        title,
+        content,
+        isPublic,
+        publicSlug,
+        createdAt,
+        updatedAt,
+      }) => ({
+        id,
+        userId,
+        title,
+        content,
+        isPublic,
+        publicSlug,
+        createdAt,
+        updatedAt,
+        author: {
+          name: authorName,
+          email: authorEmail,
+          image: authorImage,
+        },
+      }),
+    )
+  })
 
 export const getNotes = createServerFn({ method: 'GET' })
   .middleware([authMiddleware])

@@ -23,6 +23,7 @@ export const slugInput = z.object({ slug: noteSlug })
 export const listNotesInput = z.object({
   search: z.string().trim().max(200).optional(),
   sort: z.enum(['newest', 'oldest']).default('newest'),
+  isPublic: z.boolean().optional(),
 })
 
 export type CreateNoteInput = z.infer<typeof createNoteInput>

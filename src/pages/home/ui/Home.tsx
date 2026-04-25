@@ -5,7 +5,7 @@ import { NoteCard } from '#/components/NoteCard/NoteCard'
 import styles from './Home.module.css'
 import { Button } from '#/shared/ui/Button/Button'
 import { ProgressCircle } from '#/shared/ui/ProgressCircle/ProgressCircle'
-import { Edit, Edit2, Edit2Icon, Ellipsis, FilePenLine } from 'lucide-react'
+import { Ellipsis, FilePenLine } from 'lucide-react'
 import { useState } from 'react'
 
 export const HomePage = () => {

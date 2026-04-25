@@ -37,6 +37,12 @@
       .btn {
         width: fit-content;
         padding: 0 var(--spacing-3);
+        background-color: var(--color-primary);
+
+        &.active {
+          background-color: var(--color-accent);
+          color: var(--color-primary);
+        }
       }
 
       .avatarInitial {

@@ -13,6 +13,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as LoginIndexRouteImport } from './routes/login/index'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as SSlugIndexRouteImport } from './routes/s/$slug/index'
+import { Route as AuthenticatedExploreIndexRouteImport } from './routes/_authenticated/explore/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as AuthenticatedNotesNewIndexRouteImport } from './routes/_authenticated/notes/new/index'
 import { Route as AuthenticatedNotesIdIndexRouteImport } from './routes/_authenticated/notes/$id/index'
@@ -36,6 +37,12 @@ const SSlugIndexRoute = SSlugIndexRouteImport.update({
   path: '/s/$slug/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedExploreIndexRoute =
+  AuthenticatedExploreIndexRouteImport.update({
+    id: '/explore/',
+    path: '/explore/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/login/': typeof LoginIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/explore/': typeof AuthenticatedExploreIndexRoute
   '/s/$slug/': typeof SSlugIndexRoute
   '/notes/$id/': typeof AuthenticatedNotesIdIndexRoute
   '/notes/new/': typeof AuthenticatedNotesNewIndexRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
   '/': typeof AuthenticatedIndexRoute
   '/login': typeof LoginIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/explore': typeof AuthenticatedExploreIndexRoute
   '/s/$slug': typeof SSlugIndexRoute
   '/notes/$id': typeof AuthenticatedNotesIdIndexRoute
   '/notes/new': typeof AuthenticatedNotesNewIndexRoute
@@ -76,6 +85,7 @@ export interface FileRoutesById {
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/login/': typeof LoginIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/_authenticated/explore/': typeof AuthenticatedExploreIndexRoute
   '/s/$slug/': typeof SSlugIndexRoute
   '/_authenticated/notes/$id/': typeof AuthenticatedNotesIdIndexRoute
   '/_authenticated/notes/new/': typeof AuthenticatedNotesNewIndexRoute
@@ -86,17 +96,26 @@ export interface FileRouteTypes {
     | '/'
     | '/login/'
     | '/api/auth/$'
+    | '/explore/'
     | '/s/$slug/'
     | '/notes/$id/'
     | '/notes/new/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/api/auth/$' | '/s/$slug' | '/notes/$id' | '/notes/new'
+  to:
+    | '/'
+    | '/login'
+    | '/api/auth/$'
+    | '/explore'
+    | '/s/$slug'
+    | '/notes/$id'
+    | '/notes/new'
   id:
     | '__root__'
     | '/_authenticated'
     | '/_authenticated/'
     | '/login/'
     | '/api/auth/$'
+    | '/_authenticated/explore/'
     | '/s/$slug/'
     | '/_authenticated/notes/$id/'
     | '/_authenticated/notes/new/'
@@ -139,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SSlugIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/explore/': {
+      id: '/_authenticated/explore/'
+      path: '/explore'
+      fullPath: '/explore/'
+      preLoaderRoute: typeof AuthenticatedExploreIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -165,12 +191,14 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedExploreIndexRoute: typeof AuthenticatedExploreIndexRoute
   AuthenticatedNotesIdIndexRoute: typeof AuthenticatedNotesIdIndexRoute
   AuthenticatedNotesNewIndexRoute: typeof AuthenticatedNotesNewIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedExploreIndexRoute: AuthenticatedExploreIndexRoute,
   AuthenticatedNotesIdIndexRoute: AuthenticatedNotesIdIndexRoute,
   AuthenticatedNotesNewIndexRoute: AuthenticatedNotesNewIndexRoute,
 }

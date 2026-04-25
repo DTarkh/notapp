@@ -1,12 +1,21 @@
-import { Link, useRouteContext, useRouter } from '@tanstack/react-router'
+import {
+  Link,
+  useMatchRoute,
+  useRouteContext,
+  useRouter,
+} from '@tanstack/react-router'
 import styles from './Header.module.css'
 import { Button } from '#/shared/ui/Button/Button'
 import { ThemeToggle } from '#/features/themeToggle/ui/ThemeToggle'
 import { ProfileMenu } from '#/features/profileMenu/ui/ProfileMenu'
-import { FilePenLine } from 'lucide-react'
+import { FilePenLine, Notebook } from 'lucide-react'
+import clsx from 'clsx'
 
 export const Header = () => {
   const { user } = useRouteContext({ from: '__root__' })
+  const matchRoute = useMatchRoute()
+  const isMatchNotesNew = matchRoute({ to: '/notes/new' })
+  const isMatchExplore = matchRoute({ to: '/explore' })
   const router = useRouter()
 
   return (
@@ -19,8 +28,16 @@ export const Header = () => {
           <div className={styles.userRow}>
             <Button
               variant="tertiary"
+              onPress={() => router.navigate({ to: '/explore' })}
+              className={clsx(styles.btn, isMatchExplore && styles.active)}
+            >
+              <Notebook size={18} />
+              Explore
+            </Button>
+            <Button
+              variant="tertiary"
               onPress={() => router.navigate({ to: '/notes/new' })}
-              className={styles.btn}
+              className={clsx(styles.btn, isMatchNotesNew && styles.active)}
             >
               <FilePenLine size={18} />
               New note
