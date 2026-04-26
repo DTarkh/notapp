@@ -1,10 +1,9 @@
 import { useSignOut } from '#/hooks/useAuth'
 import { Menu, MenuItem, MenuSection, MenuTrigger } from '#/shared/ui/Menu/Menu'
-import { Link, useRouteContext, useRouter } from '@tanstack/react-router'
-import { LogOut, User, Link as LinkIcon, FilePenLine } from 'lucide-react'
+import { useRouteContext, useRouter } from '@tanstack/react-router'
+import { LogOut, User, FilePenLine } from 'lucide-react'
 import { Button, Separator, Text } from 'react-aria-components'
 import styles from './ProfileMenu.module.css'
-import { Popover } from '#/shared/ui/Popover/Popover'
 
 export const ProfileMenu = () => {
   const { user } = useRouteContext({ from: '__root__' })
@@ -13,7 +12,11 @@ export const ProfileMenu = () => {
   return (
     <MenuTrigger>
       <Button className={styles.avatar} aria-label="User menu">
-        {user.image ? <img src={user.image} alt="User avatar" /> : <User />}
+        {user.image ? (
+          <img src={user.image} alt="User avatar" />
+        ) : (
+          <User size={20} className={styles.icon} />
+        )}
       </Button>
 
       <Menu>
