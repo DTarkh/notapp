@@ -7,6 +7,8 @@ export const noteId = z.string().uuid()
 export const noteSlug = z.string().min(6).max(12)
 
 export const createNoteInput = z.object({
+  /** When set, used for the new row (keeps client optimistic + server in sync). */
+  id: noteId.optional(),
   title: titleField,
   content: contentField,
 })

@@ -9,5 +9,12 @@ export const Route = createFileRoute('/_authenticated/notes/new/')({
 function NewNote() {
   const { mutate: addNote, isPending: isAdding } = useAddNote()
 
-  return <Editor onSave={addNote} isSaving={isAdding} />
+  return (
+    <Editor
+      onSave={({ title, content }) =>
+        addNote({ id: crypto.randomUUID(), title, content })
+      }
+      isSaving={isAdding}
+    />
+  )
 }

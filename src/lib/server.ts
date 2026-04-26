@@ -118,7 +118,7 @@ export const createNote = createServerFn({ method: 'POST' })
     const userId = requireUser(context)
     const [row] = await db
       .insert(notes)
-      .values({ id: crypto.randomUUID(), userId, ...data })
+      .values({ id: data.id ?? crypto.randomUUID(), userId, ...data })
       .returning()
     return row
   })
