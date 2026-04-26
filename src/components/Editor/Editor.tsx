@@ -56,12 +56,7 @@ export const Editor = ({
       {error && <p role="alert">{error}</p>}
 
       <div className={styles.buttonContainer}>
-        <Button
-          variant="primary"
-          isPending={isSaving}
-          isDisabled={isSaving}
-          onPress={handleSave}
-        >
+        <Button variant="primary" isDisabled={isSaving} onPress={handleSave}>
           Save Note
         </Button>
       </div>
