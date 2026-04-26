@@ -20,27 +20,3 @@
   display: flex;
   gap: 0.25rem;
 }
-
-/* View-mode markdown only: match page background (see .wmde-markdown in uiw markdown.css) */
-:global(.wmde-markdown).markdownView {
-  background-color: var(--color-primary);
-  color: var(--color-secondary);
-}
-:global(.wmde-markdown hr){
-  background-color: var(--color-accent);
-}
-
-:global(.wmde-markdown h1){
-  border-bottom: 1px solid var(--color-secondary);
-}
-
-
-:global(.wmde-markdown code){
-  background-color: var(--color-tertiary);
-  color: var(--color-primary);
-}
-
-:global(.wmde-markdown .code-highlight){
-  background-color: var(--color-pre-primary);
-  color: var(--color-secondary);
-}

@@ -2,10 +2,10 @@ import { useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { Editor } from '#/components/Editor/Editor'
+import { MarkdownView } from '#/components/Editor/MarkdownView'
 import { Button } from '#/shared/ui/Button/Button'
 import { ShareBar } from '#/shared/ui/ShareBar/ShareBar'
 import { ConfirmDialog } from '#/shared/ui/ConfirmDialog/ConfirmDialog'
-import MDEditor from '@uiw/react-md-editor'
 import styles from './NoteEditor.module.css'
 import { ProgressCircle } from '#/shared/ui/ProgressCircle/ProgressCircle'
 import { notesListQueryOptions } from '#/shared/queryOptions/queryOptions'
@@ -81,12 +81,7 @@ const NoteEditor = () => {
               </ConfirmDialog>
             </div>
 
-            {!isEditing && (
-              <MDEditor.Markdown
-                source={note.content}
-                className={styles.markdownView}
-              />
-            )}
+            {!isEditing && <MarkdownView source={note.content} />}
           </>
         )}
       </div>

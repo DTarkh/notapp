@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
-import MDEditor from '@uiw/react-md-editor'
+import { MarkdownView } from '#/components/Editor/MarkdownView'
 import { getPublicNote } from '#/lib/server'
 import styles from './PublicNote.module.css'
 
@@ -28,7 +28,7 @@ function PublicNote() {
   return (
     <article className={styles.public}>
       <h1 className={styles.title}>{data.title}</h1>
-      <MDEditor.Markdown source={data.content} />
+      <MarkdownView source={data.content} />
     </article>
   )
 }
