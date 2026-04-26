@@ -31,7 +31,7 @@
 .react-aria-MenuItem {
   margin-inline: var(--spacing-1);
   padding: calc((var(--spacing-8) - 1lh) / 2) 0;
-  border-radius: calc(var(--radius-lg) - var(--spacing-1));
+
   outline: none;
   cursor: default;
   color: var(--text-color);

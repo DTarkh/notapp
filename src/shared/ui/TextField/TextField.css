@@ -11,7 +11,6 @@
   box-sizing: border-box;
   margin: 0;
   border: none;
-  border-radius: var(--radius);
   font: var(--font-size) system-ui;
   color: var(--color-secondary);
   background-color: var(--color-pre-primary);

@@ -49,9 +49,11 @@
 
 .react-aria-Button.button-base[data-variant='primary'] {
   background-color: var(--color-tertiary);
-  box-shadow: none;
+  box-shadow: var(--shadow-s);
   color: var(--color-primary);
   font-weight: var(--font-bold);
+
+  border-radius: 0;
 
   &:hover {
     scale: 1.02;
@@ -63,8 +65,9 @@
   background-color: var(--color-primary);
   color: var(--color-tertiary);
   border: 2px solid var(--color-tertiary);
-  box-shadow: none;
+  box-shadow: var(--shadow-s);
   font-weight: var(--font-bold);
+  border-radius: 0;
 
   &:hover {
     scale: 1.02;
@@ -75,7 +78,9 @@
 .react-aria-Button.button-base[data-variant='tertiary'] {
   background-color: var(--color-primary);
   color: var(--color-tertiary);
-  box-shadow: none;
+  box-shadow: var(--shadow-s);
+  border-radius: 0;
+  box-shadow: var(--shadow-s);
 
   font-weight: var(--font-semibold);
 
@@ -87,12 +92,29 @@
 
 .react-aria-Button.button-base[data-variant='accent'] {
   background-color: var(--color-accent);
-  box-shadow: none;
+  box-shadow: var(--shadow-s);
   color: var(--color-primary);
   font-weight: var(--font-bold);
+  border-radius: 0;
 
   &:hover {
     scale: 1.02;
     transition: scale 0.2s ease-in-out;
+  }
+}
+
+.react-aria-Button.button-base[data-variant='highlight'] {
+  background: var(--color-highlight);
+  color: var(--color-primary);
+  box-shadow: none;
+  border-radius: 0;
+  border: 2px solid var(--color-secondary);
+  box-shadow: var(--shadow-s);
+  transition: background 0.15s ease;
+
+  font-weight: var(--font-semibold);
+
+  &:hover {
+    background: var(--color-tertiary);
   }
 }

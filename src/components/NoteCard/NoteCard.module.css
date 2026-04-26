@@ -5,10 +5,8 @@
   min-width: 0;
   width: 100%;
   padding: 10px 16px;
-  border: none;
   border-radius: 0;
-  background: transparent;
-  transition: background 0.12s ease;
+  transition: box-shadow 0.22s ease;
 
   &:hover {
     box-shadow: var(--shadow-m);

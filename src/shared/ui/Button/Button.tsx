@@ -10,7 +10,7 @@ interface ButtonProps extends RACButtonProps {
    * The visual style of the button (Vanilla CSS implementation specific).
    * @default 'primary'
    */
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'accent'
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'accent' | 'highlight'
 }
 
 export const Button = (props: ButtonProps) => {

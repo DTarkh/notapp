@@ -1,13 +1,14 @@
 .avatar {
   flex-shrink: 0;
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 100%;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
+  border: 2px solid var(--color-primary);
+  box-shadow: var(--shadow-s);
   background-color: var(--color-primary);
 
   img {

@@ -18,7 +18,7 @@ export const HomePage = () => {
         <header>
           <h1>Your notes</h1>
           <Button
-            variant="accent"
+            variant="highlight"
             onPress={() => router.navigate({ to: '/notes/new' })}
             className={styles.btn}
           >
@@ -48,7 +48,7 @@ export const HomePage = () => {
           <div className={styles.usersDashboard}>dawdaw</div>
         </div>
       )}
-      <Button onPress={() => setIsOpen(!isOpen)}>
+      <Button variant="primary" onPress={() => setIsOpen(!isOpen)}>
         <Ellipsis size={18} />
       </Button>
     </div>
