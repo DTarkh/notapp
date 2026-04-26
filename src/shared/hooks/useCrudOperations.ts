@@ -1,24 +1,70 @@
 import { deleteNote, toggleShare, updateNote } from '#/lib/server'
+import type { getNotes } from '#/lib/server'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { showToast } from '../util/showToast'
+import {
+  notesListQueryOptions,
+  noteQueryOptions,
+} from '#/shared/queryOptions/queryOptions'
+
+type NoteRow = Awaited<ReturnType<typeof getNotes>>[number]
 
 export const useSaveNote = (
   id: string,
   setIsEditing: (isEditing: boolean) => void,
 ) => {
   const queryClient = useQueryClient()
+  const listKey = notesListQueryOptions().queryKey
+  const detailKey = noteQueryOptions(id).queryKey
+
   return useMutation({
     mutationFn: (data: { title: string; content: string }) =>
       updateNote({ data: { id, ...data } }),
-    onSuccess: (row) => {
-      queryClient.setQueryData(['notes', id], row)
-      queryClient.invalidateQueries({ queryKey: ['notes'] })
-      showToast('Note saved successfully')
+
+    onMutate: async (data) => {
+      await queryClient.cancelQueries({ queryKey: listKey })
+      await queryClient.cancelQueries({ queryKey: detailKey })
+
+      const previousList = queryClient.getQueryData<Array<NoteRow>>(listKey)
+      const previousDetail = queryClient.getQueryData<NoteRow>(detailKey)
+
+      const now = new Date()
+
+      queryClient.setQueryData<Array<NoteRow>>(listKey, (old) =>
+        old?.map((n) =>
+          n.id === id
+            ? { ...n, title: data.title, content: data.content, updatedAt: now }
+            : n,
+        ),
+      )
+      queryClient.setQueryData<NoteRow>(detailKey, (old) =>
+        old
+          ? { ...old, title: data.title, content: data.content, updatedAt: now }
+          : old,
+      )
+
       setIsEditing(false)
+
+      return { previousList, previousDetail }
     },
-    onError: (error) => {
+
+    onError: (error, _data, context) => {
+      if (context?.previousList !== undefined) {
+        queryClient.setQueryData(listKey, context.previousList)
+      }
+      if (context?.previousDetail !== undefined) {
+        queryClient.setQueryData(detailKey, context.previousDetail)
+      }
       showToast('Error saving note', error)
+    },
+
+    onSuccess: () => {
+      showToast('Note saved successfully')
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['notes'] })
     },
   })
 }
@@ -29,30 +75,91 @@ export const useDeleteNote = (
 ) => {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
+  const listKey = notesListQueryOptions().queryKey
+
   return useMutation({
     mutationFn: () => deleteNote({ data: { id } }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['notes'] })
+
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: listKey })
+
+      const previousList = queryClient.getQueryData<Array<NoteRow>>(listKey)
+
+      queryClient.setQueryData<Array<NoteRow>>(listKey, (old) =>
+        old?.filter((n) => n.id !== id),
+      )
+
       setConfirmOpen(false)
+
       navigate({ to: '/' })
+      return { previousList }
+    },
+
+    onError: (error, _vars, context) => {
+      if (context?.previousList !== undefined) {
+        queryClient.setQueryData(listKey, context.previousList)
+      }
+      showToast('Failed to delete note', error)
+    },
+
+    onSuccess: () => {
       showToast('Note deleted successfully')
     },
-    onError: (error) => {
-      showToast('Failed to delete note', error)
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['notes'] })
     },
   })
 }
 
 export const useShareNote = (id: string) => {
   const queryClient = useQueryClient()
+  const listKey = notesListQueryOptions().queryKey
+  const detailKey = noteQueryOptions(id).queryKey
+
   return useMutation({
     mutationFn: () => toggleShare({ data: { id } }),
+
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: listKey })
+      await queryClient.cancelQueries({ queryKey: detailKey })
+
+      const previousList = queryClient.getQueryData<Array<NoteRow>>(listKey)
+      const previousDetail = queryClient.getQueryData<NoteRow>(detailKey)
+
+      queryClient.setQueryData<Array<NoteRow>>(listKey, (old) =>
+        old?.map((n) => (n.id === id ? { ...n, isPublic: !n.isPublic } : n)),
+      )
+      queryClient.setQueryData<NoteRow>(detailKey, (old) =>
+        old ? { ...old, isPublic: !old.isPublic } : old,
+      )
+
+      return { previousList, previousDetail }
+    },
+
+    onError: (error, _vars, context) => {
+      if (context?.previousList !== undefined) {
+        queryClient.setQueryData(listKey, context.previousList)
+      }
+      if (context?.previousDetail !== undefined) {
+        queryClient.setQueryData(detailKey, context.previousDetail)
+      }
+      showToast('Failed to share note', error)
+    },
+
     onSuccess: (row) => {
-      queryClient.setQueryData(['notes', id], row)
+      // Server returns the authoritative row (including a freshly generated
+      // publicSlug on first share) — write it into both caches so the UI
+      // reflects it immediately without waiting for the refetch.
+      queryClient.setQueryData<Array<NoteRow>>(listKey, (old) =>
+        old?.map((n) => (n.id === id ? row : n)),
+      )
+      queryClient.setQueryData<NoteRow>(detailKey, row)
       showToast('Note shared successfully')
     },
-    onError: (error) => {
-      showToast('Failed to share note', error)
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['notes'] })
     },
   })
 }
