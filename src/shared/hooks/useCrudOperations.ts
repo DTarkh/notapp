@@ -1,4 +1,4 @@
-import { deleteNote, toggleShare, updateNote } from '#/lib/server'
+import { createNote, deleteNote, toggleShare, updateNote } from '#/lib/server'
 import type { getNotes } from '#/lib/server'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
@@ -7,6 +7,7 @@ import {
   notesListQueryOptions,
   noteQueryOptions,
 } from '#/shared/queryOptions/queryOptions'
+import type { CreateNoteInput } from '#/lib/schemas/notes'
 
 type NoteRow = Awaited<ReturnType<typeof getNotes>>[number]
 
@@ -65,6 +66,22 @@ export const useSaveNote = (
 
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['notes'] })
+    },
+  })
+}
+
+export const useAddNote = () => {
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (data: CreateNoteInput) => createNote({ data }),
+    onSuccess: (row) => {
+      queryClient.invalidateQueries({ queryKey: ['notes'] })
+      navigate({ to: '/notes/$id', params: { id: row.id } })
+      showToast('Note added successfully')
+    },
+    onError: (error) => {
+      showToast('Failed to add note', error)
     },
   })
 }
