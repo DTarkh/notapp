@@ -1,6 +1,6 @@
 .editor {
   margin-top: var(--space-3xl);
-  width: var(--content-width);
+  width: var(--content-width-small);
   margin-inline: auto;
 }
 

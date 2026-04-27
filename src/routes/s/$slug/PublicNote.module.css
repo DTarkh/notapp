@@ -1,5 +1,5 @@
 .public {
-  max-width: 720px;
+  max-width: var(--content-width-small);
   margin: var(--space-3xl, 64px) auto;
   padding: 0 var(--spacing-4, 16px);
   font-family: var(--font-sans, system-ui, sans-serif);

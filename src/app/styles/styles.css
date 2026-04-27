@@ -12,7 +12,9 @@
   --color-accent: hsl(335, 80%, 20%);
 
   --max-width: 70rem; /* 1120px */
+  --max-width-small: 40rem; /* 640px */
   --content-width: min(95%, var(--max-width));
+  --content-width-small: min(95%, var(--max-width-small));
 
   --space-sm: 0.5rem; /* 8px */
   --space-md: 1rem; /* 16px */
