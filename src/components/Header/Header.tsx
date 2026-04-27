@@ -1,22 +1,24 @@
-import {
-  Link,
-  useMatchRoute,
-  useRouteContext,
-  useRouter,
-} from '@tanstack/react-router'
+import { Link, useMatchRoute, useRouteContext } from '@tanstack/react-router'
 import styles from './Header.module.css'
-import { Button } from '#/shared/ui/Button/Button'
 import { ThemeToggle } from '#/features/themeToggle/ui/ThemeToggle'
 import { ProfileMenu } from '#/features/profileMenu/ui/ProfileMenu'
 import { FilePenLine, Notebook } from 'lucide-react'
-import clsx from 'clsx'
 
 export const Header = () => {
   const { user } = useRouteContext({ from: '__root__' })
-  const matchRoute = useMatchRoute()
-  const isMatchNotesNew = matchRoute({ to: '/notes/new' })
-  const isMatchExplore = matchRoute({ to: '/explore' })
-  const router = useRouter()
+
+  const navigation = [
+    {
+      label: 'Explore',
+      icon: Notebook,
+      to: '/explore',
+    },
+    {
+      label: 'New Note',
+      icon: FilePenLine,
+      to: '/notes/new',
+    },
+  ]
 
   return (
     <header className={styles.header}>
@@ -25,26 +27,25 @@ export const Header = () => {
           Not<span className={styles.accent}>App</span>
         </Link>
         {user.id && (
-          <div className={styles.userRow}>
-            <Button
-              variant="tertiary"
-              onPress={() => router.navigate({ to: '/explore' })}
-              className={clsx(styles.btn, isMatchExplore && styles.active)}
-            >
-              <Notebook size={18} />
-              Explore
-            </Button>
-            <Button
-              variant="tertiary"
-              onPress={() => router.navigate({ to: '/notes/new' })}
-              className={clsx(styles.btn, isMatchNotesNew && styles.active)}
-            >
-              <FilePenLine size={18} />
-              New note
-            </Button>
-            <ThemeToggle />
-            {user.id && <ProfileMenu />}
-          </div>
+          <>
+            <div className={styles.userRow}>
+              <ul>
+                {navigation.map((item) => (
+                  <li key={item.to}>
+                    <Link
+                      to={item.to}
+                      activeProps={{ className: styles.active }}
+                    >
+                      <item.icon size={18} />
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <ThemeToggle />
+              {user.id && <ProfileMenu />}
+            </div>
+          </>
         )}
       </nav>
     </header>

@@ -28,22 +28,39 @@
         color: var(--color-accent);
       }
     }
+    ul {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      li {
+        list-style: none;
+
+        a {
+          display: flex;
+          align-items: center;
+          gap: 0.25rem;
+          color: var(--color-tertiary);
+          text-decoration: none;
+          background-color: var(--color-primary);
+          box-shadow: var(--shadow-s);
+          padding: 0 0.5rem;
+          height: 32px;
+          font-weight: var(--font-semibold);
+          font-size: var(--font-size);
+          transition: background color 0.2s ease-in-out;
+        }
+        .active {
+          background-color: var(--color-accent);
+          color: var(--color-primary);
+        }
+      }
+    }
 
     .userRow {
       display: flex;
       align-items: center;
       gap: 0.75rem;
-
-      .btn {
-        width: fit-content;
-        padding: 0 var(--spacing-3);
-        background-color: var(--color-primary);
-
-        &.active {
-          background-color: var(--color-accent);
-          color: var(--color-primary);
-        }
-      }
 
       .avatarInitial {
         font-size: 0.95rem;
